@@ -1,0 +1,55 @@
+<!-- templates/login.html -->
+{% extends "layout.html" %}
+
+{% block title %}Login - LearnHub{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="container">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>Login to Your Account</h1>
+                <p>Welcome back! Please enter your credentials to access your account.</p>
+            </div>
+            
+            <form class="auth-form" method="POST" action="{{ url_for('login', next=request.args.get('next')) }}">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn-primary btn-block">Login</button>
+                </div>
+                
+                <div class="auth-links">
+                    <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+                </div>
+            </form>
+            
+            <div class="auth-sample">
+                <div class="sample-accounts">
+                    <h3>Sample Accounts</h3>
+                    <div class="sample-account">
+                        <p><strong>Student:</strong> user1@example.com / password123</p>
+                    </div>
+                    <div class="sample-account">
+                        <p><strong>Instructor:</strong> user2@example.com / password456</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

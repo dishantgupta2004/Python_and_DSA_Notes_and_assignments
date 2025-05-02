@@ -1,0 +1,148 @@
+<!-- templates/dashboard.html -->
+{% extends "layout.html" %}
+
+{% block title %}Dashboard - LearnHub{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+<div class="container">
+<h1>Welcome, {{ user.name }}!</h1>
+<p>Here's your personalized dashboard.</p>
+
+<div class="session-info">
+<div class="info-card">
+<div class="info-icon">
+    <i class="fas fa-clock"></i>
+</div>
+<div class="info-content">
+    <h3>Session Info</h3>
+    <p>Login time: {{ login_time }}</p>
+    {% if session_duration %}
+    <p>Current session duration: {{ session_duration }}</p>
+    {% endif %}
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="dashboard-content">
+<div class="container">
+<div class="dashboard-grid">
+<div class="dashboard-column">
+<div class="dashboard-card">
+    <div class="card-header">
+        <h2>My Courses</h2>
+        <a href="{{ url_for('course_list') }}" class="view-all">Browse All Courses</a>
+    </div>
+    
+    {% if enrolled_courses %}
+    <div class="courses-list">
+        {% for course in enrolled_courses %}
+        <div class="course-item">
+            <h3><a href="{{ url_for('course_detail', course_id=course.id) }}">{{ course.title }}</a></h3>
+            <div class="course-info">
+                <span class="instructor">Instructor: {{ course.instructor }}</span>
+                <span class="duration">Duration: {{ course.duration }}</span>
+            </div>
+            <a href="{{ url_for('course_detail', course_id=course.id) }}" class="btn-secondary">Continue Learning</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">
+            <i class="fas fa-book"></i>
+        </div>
+        <p>You are not enrolled in any courses yet.</p>
+        <a href="{{ url_for('course_list') }}" class="btn-primary">Browse Courses</a>
+    </div>
+    {% endif %}
+</div>
+
+<div class="dashboard-card">
+    <div class="card-header">
+        <h2>Preferences</h2>
+        <a href="{{ url_for('preferences') }}" class="view-all">Edit Preferences</a>
+    </div>
+    
+    <div class="preferences-summary">
+        <div class="preference-item">
+            <span class="preference-label">Theme:</span>
+            <span class="preference-value">{{ preferences.theme|capitalize }}</span>
+        </div>
+        <div class="preference-item">
+            <span class="preference-label">Notifications:</span>
+            <span class="preference-value">{{ 'Enabled' if preferences.notifications else 'Disabled' }}</span>
+        </div>
+        <div class="preference-item">
+            <span class="preference-label">Language:</span>
+            <span class="preference-value">{{ preferences.language|capitalize }}</span>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="dashboard-column">
+<div class="dashboard-card">
+    <div class="card-header">
+        <h2>Recent Activity</h2>
+        <a href="{{ url_for('history') }}" class="view-all">View All</a>
+    </div>
+    
+    {% if recent_activity %}
+    <div class="activity-list">
+        {% for activity in recent_activity %}
+        <div class="activity-item">
+            <div class="activity-icon">
+                {% if activity.type == 'login' %}
+                <i class="fas fa-sign-in-alt"></i>
+                {% elif activity.type == 'course_view' %}
+                <i class="fas fa-eye"></i>
+                {% elif activity.type == 'enrollment' %}
+                <i class="fas fa-user-plus"></i>
+                {% endif %}
+            </div>
+            <div class="activity-content">
+                <p>{{ activity.description }}</p>
+                <span class="timestamp">{{ activity.timestamp }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">
+            <i class="fas fa-history"></i>
+        </div>
+        <p>No activity recorded yet.</p>
+    </div>
+    {% endif %}
+</div>
+
+<div class="dashboard-card">
+    <div class="card-header">
+        <h2>Account Information</h2>
+    </div>
+    
+    <div class="account-info">
+        <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ user.email }}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Role:</span>
+            <span class="info-value">{{ user.role|capitalize }}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Session Storage:</span>
+            <span class="info-value">{{ session.permanent|default(false)|string|capitalize }}</span>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,193 @@
+<!-- templates/index.html -->
+{% extends "layout.html" %}
+
+{% block title %}Register for GenAI Course - UniSole{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Master Generative AI</h1>
+            <p>Join our comprehensive course to learn how to solve real-world problems using cutting-edge AI technologies</p>
+        </div>
+    </div>
+</section>
+
+<section class="registration-section">
+    <div class="container">
+        <div class="registration-container">
+            <div class="registration-info">
+                <h2>Why Join Our GenAI Course?</h2>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Cutting-Edge Curriculum</h3>
+                        <p>Learn the latest in generative AI, from foundational concepts to advanced applications.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Hands-On Projects</h3>
+                        <p>Build real AI applications that solve meaningful problems.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Expert Mentorship</h3>
+                        <p>Get guidance from industry professionals with experience in AI development.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Industry-Recognized Certificate</h3>
+                        <p>Earn a certificate that demonstrates your AI expertise to employers.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="registration-form">
+                <h2>Register for the Course</h2>
+                <form method="POST" action="{{ url_for('index') }}">
+                    {{ form.csrf_token }}
+                    
+                    <div class="form-group">
+                        {{ form.full_name.label }}
+                        {{ form.full_name(class="form-control", placeholder="Enter your full name") }}
+                        {% if form.full_name.errors %}
+                            <div class="error-message">
+                                {% for error in form.full_name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.email.label }}
+                        {{ form.email(class="form-control", placeholder="Enter your email address") }}
+                        {% if form.email.errors %}
+                            <div class="error-message">
+                                {% for error in form.email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.phone.label }}
+                        {{ form.phone(class="form-control", placeholder="e.g., +1234567890") }}
+                        {% if form.phone.errors %}
+                            <div class="error-message">
+                                {% for error in form.phone.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.education.label }}
+                        {{ form.education(class="form-control") }}
+                        {% if form.education.errors %}
+                            <div class="error-message">
+                                {% for error in form.education.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.background.label }}
+                        {{ form.background(class="form-control") }}
+                        {% if form.background.errors %}
+                            <div class="error-message">
+                                {% for error in form.background.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.interest.label }}
+                        {{ form.interest(class="form-control", rows=4, placeholder="Tell us why you want to join this course...") }}
+                        {% if form.interest.errors %}
+                            <div class="error-message">
+                                {% for error in form.interest.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>{{ form.course_track.label }}</label>
+                        <div class="radio-options">
+                            {% for subfield in form.course_track %}
+                                <div class="radio-option">
+                                    {{ subfield }}
+                                    {{ subfield.label }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.course_track.errors %}
+                            <div class="error-message">
+                                {% for error in form.course_track.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.referral.label }}
+                        {{ form.referral(class="form-control") }}
+                        {% if form.referral.errors %}
+                            <div class="error-message">
+                                {% for error in form.referral.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        {{ form.newsletter }}
+                        {{ form.newsletter.label }}
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        {{ form.terms }}
+                        {{ form.terms.label }}
+                        {% if form.terms.errors %}
+                            <div class="error-message">
+                                {% for error in form.terms.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.submit(class="submit-btn") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

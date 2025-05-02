@@ -1,0 +1,99 @@
+<!-- templates/course_detail.html -->
+{% extends "layout.html" %}
+
+{% block title %}{{ course.title }} - LearnHub{% endblock %}
+
+{% block content %}
+<section class="course-header">
+<div class="container">
+<div class="course-header-content">
+<h1>{{ course.title }}</h1>
+<div class="course-meta">
+<span class="instructor">Instructor: {{ course.instructor }}</span>
+<span class="duration">Duration: {{ course.duration }}</span>
+<span class="enrolled-count">{{ course.enrolled|length }} students enrolled</span>
+</div>
+
+{% if user.email not in course.enrolled %}
+<a href="{{ url_for('enroll', course_id=course.id) }}" class="btn-primary">Enroll Now</a>
+{% else %}
+<div class="enrolled-badge">
+<i class="fas fa-check-circle"></i> You are enrolled in this course
+</div>
+{% endif %}
+</div>
+</div>
+</section>
+
+<section class="course-content-section">
+<div class="container">
+<div class="course-details">
+<div class="course-description">
+<h2>About this Course</h2>
+<p>{{ course.description }}</p>
+
+<div class="course-features">
+    <h3>What you'll learn</h3>
+    <div class="features-grid">
+        <div class="feature">
+            <i class="fas fa-check"></i> Understand core concepts and principles
+        </div>
+        <div class="feature">
+            <i class="fas fa-check"></i> Build practical skills through hands-on projects
+        </div>
+        <div class="feature">
+            <i class="fas fa-check"></i> Apply knowledge to real-world scenarios
+        </div>
+        <div class="feature">
+            <i class="fas fa-check"></i> Earn a certificate upon completion
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="course-sidebar">
+<div class="sidebar-card">
+    <h3>Course Information</h3>
+    <div class="info-item">
+        <div class="info-icon">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="info-content">
+            <span class="info-label">Instructor</span>
+            <span class="info-value">{{ course.instructor }}</span>
+        </div>
+    </div>
+    <div class="info-item">
+        <div class="info-icon">
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="info-content">
+            <span class="info-label">Duration</span>
+            <span class="info-value">{{ course.duration }}</span>
+        </div>
+    </div>
+    <div class="info-item">
+        <div class="info-icon">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="info-content">
+            <span class="info-label">Enrolled</span>
+            <span class="info-value">{{ course.enrolled|length }} students</span>
+        </div>
+    </div>
+    
+    {% if user.email not in course.enrolled %}
+    <a href="{{ url_for('enroll', course_id=course.id) }}" class="btn-primary btn-block">Enroll Now</a>
+    {% else %}
+    <div class="enrolled-message">
+        <i class="fas fa-check-circle"></i> You are enrolled in this course
+    </div>
+    <a href="#" class="btn-secondary btn-block">Go to Course Content</a>
+    {% endif %}
+</div>
+</div>
+</div>
+</div>
+</section>
+{% endblock %}
+

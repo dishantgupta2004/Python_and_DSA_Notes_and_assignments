@@ -1,0 +1,100 @@
+<!-- templates/video.html -->
+{% extends "layout.html" %}
+
+{% block title %}{{ video.title }} - SciTube{% endblock %}
+
+{% block content %}
+<div class="video-page">
+    <div class="main-content">
+        <div class="video-container">
+            <div class="embed-responsive">
+                <!-- In a real app, this would be a real video player -->
+                <div class="video-player">
+                    <img src="https://img.youtube.com/vi/{{ video.id }}/maxresdefault.jpg" alt="{{ video.title }}">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="video-details">
+            <h1>{{ video.title }}</h1>
+            <div class="video-stats">
+                <span class="views">{{ video.views|format_number }} views</span>
+                <span class="upload-date">{{ video.uploaded|time_ago }}</span>
+            </div>
+            
+            <div class="author-info">
+                <a href="{{ url_for('user_profile', username=video.author) }}" class="author-link">
+                    <div class="author-avatar">
+                        {{ video.author[0] }}
+                    </div>
+                    <div class="author-name">{{ video.author }}</div>
+                </a>
+                <button class="subscribe-btn">Subscribe</button>
+            </div>
+            
+            <div class="video-description">
+                <p>{{ video.description }}</p>
+                <div class="tags">
+                    {% for tag in video.tags %}
+                    <a href="{{ url_for('search') }}?q={{ tag }}" class="tag">#{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="comments-section">
+            <h3>Comments</h3>
+            <div class="comment-form">
+                <textarea placeholder="Add a comment..."></textarea>
+                <button class="comment-btn">Comment</button>
+            </div>
+            <div class="comments-list">
+                <div class="comment">
+                    <div class="comment-avatar">U</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author">User123</span>
+                            <span class="comment-time">2 weeks ago</span>
+                        </div>
+                        <p>This was an excellent explanation of quantum computing principles!</p>
+                    </div>
+                </div>
+                <div class="comment">
+                    <div class="comment-avatar">S</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author">ScienceFan</span>
+                            <span class="comment-time">3 days ago</span>
+                        </div>
+                        <p>I'm curious about how this applies to recent developments in quantum error correction.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="sidebar">
+        <h3>Recommended Videos</h3>
+        <div class="recommended-videos">
+            {% for rec in recommended %}
+            <div class="rec-video-card">
+                <a href="{{ url_for('video_detail', video_id=rec.id) }}" class="thumbnail">
+                    <img src="https://img.youtube.com/vi/{{ rec.id }}/mqdefault.jpg" alt="{{ rec.title }}">
+                </a>
+                <div class="rec-video-info">
+                    <h4><a href="{{ url_for('video_detail', video_id=rec.id) }}">{{ rec.title }}</a></h4>
+                    <div class="meta">
+                        <a href="{{ url_for('user_profile', username=rec.author) }}" class="author">{{ rec.author }}</a>
+                        <span class="views">{{ rec.views|format_number }} views</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

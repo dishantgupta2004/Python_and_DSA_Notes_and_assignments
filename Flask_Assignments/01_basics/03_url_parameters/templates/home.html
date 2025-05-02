@@ -1,0 +1,61 @@
+<!-- templates/home.html -->
+{% extends "layout.html" %}
+
+{% block title %}SciTube - Science Video Platform{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Discover the World of Science</h1>
+        <p>Watch videos and read articles about the latest breakthroughs in science and technology.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="section-header">
+        <h2>Featured Videos</h2>
+        <a href="#" class="view-all">View All</a>
+    </div>
+    <div class="video-grid">
+        {% for video in videos %}
+        <div class="video-card">
+            <a href="{{ url_for('video_detail', video_id=video.id) }}" class="thumbnail">
+                <img src="https://img.youtube.com/vi/{{ video.id }}/mqdefault.jpg" alt="{{ video.title }}">
+                <span class="duration">10:24</span>
+            </a>
+            <div class="video-info">
+                <h3><a href="{{ url_for('video_detail', video_id=video.id) }}">{{ video.title }}</a></h3>
+                <div class="meta">
+                    <a href="{{ url_for('user_profile', username=video.author) }}" class="author">{{ video.author }}</a>
+                    <span class="views">{{ video.views|format_number }} views</span>
+                    <span class="upload-date">{{ video.uploaded|time_ago }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="section-header">
+        <h2>Latest Articles</h2>
+        <a href="#" class="view-all">View All</a>
+    </div>
+    <div class="article-grid">
+        {% for article in articles %}
+        <div class="article-card">
+            <div class="article-info">
+                <h3><a href="{{ url_for('article_detail', article_id=article.id) }}">{{ article.title }}</a></h3>
+                <p class="summary">{{ article.summary }}</p>
+                <div class="meta">
+                    <span class="author">By {{ article.author }}</span>
+                    <span class="publish-date">{{ article.published|time_ago }}</span>
+                    <a href="{{ url_for('category', category=article.category) }}" class="category">{{ article.category }}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

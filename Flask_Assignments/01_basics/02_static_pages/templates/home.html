@@ -1,0 +1,85 @@
+<!-- templates/home.html -->
+{% extends "layout.html" %}
+
+{% block title %}Home - Quantum Physics Portal{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h2>Explore the Quantum World</h2>
+    <p>Discover the fascinating principles that govern the universe at the smallest scales.</p>
+</section>
+
+<section class="featured">
+    <div class="card">
+        <h3>Quantum Mechanics</h3>
+        <p>Learn about the fundamental theory that describes nature at the scale of atoms and subatomic particles.</p>
+        <a href="{{ url_for('quantum_mechanics') }}" class="button">Explore &rarr;</a>
+    </div>
+    <div class="card">
+        <h3>Wave-Particle Duality</h3>
+        <p>Understand how particles can exhibit both wave-like and particle-like properties.</p>
+        <a href="{{ url_for('wave_particle') }}" class="button">Explore &rarr;</a>
+    </div>
+    <div class="card">
+        <h3>Uncertainty Principle</h3>
+        <p>Delve into Heisenberg's principle and its implications for quantum measurements.</p>
+        <a href="{{ url_for('uncertainty') }}" class="button">Explore &rarr;</a>
+    </div>
+</section>
+
+<div id="wavefunction-plot"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Create a quantum wavefunction visualization
+    function plotWavefunction() {
+        const x = [];
+        const psi = [];
+        const prob = [];
+        
+        for (let i = -10; i <= 10; i += 0.1) {
+            x.push(i);
+            // Simple Gaussian wavefunction
+            const wf = Math.exp(-(i*i)/2);
+            psi.push(wf);
+            // Probability density
+            prob.push(wf*wf);
+        }
+        
+        const traces = [
+            {
+                x: x,
+                y: psi,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Wavefunction (Ψ)',
+                line: {color: '#3366cc', width: 2}
+            },
+            {
+                x: x,
+                y: prob,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Probability (|Ψ|²)',
+                line: {color: '#cc3366', width: 2}
+            }
+        ];
+        
+        const layout = {
+            title: 'Quantum Wavefunction Visualization',
+            xaxis: {title: 'Position'},
+            yaxis: {title: 'Amplitude'},
+            autosize: true,
+            height: 400,
+            margin: {l: 50, r: 50, t: 80, b: 50}
+        };
+        
+        Plotly.newPlot('wavefunction-plot', traces, layout);
+    }
+    
+    document.addEventListener('DOMContentLoaded', plotWavefunction);
+    window.addEventListener('resize', plotWavefunction);
+</script>
+{% endblock %}
+

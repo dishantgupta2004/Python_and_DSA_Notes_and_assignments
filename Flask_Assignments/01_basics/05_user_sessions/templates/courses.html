@@ -1,0 +1,42 @@
+<!-- templates/courses.html -->
+{% extends "layout.html" %}
+
+{% block title %}Courses - LearnHub{% endblock %}
+
+{% block content %}
+<section class="courses-header">
+<div class="container">
+<h1>Available Courses</h1>
+<p>Expand your knowledge with our selection of high-quality courses</p>
+</div>
+</section>
+
+<section class="courses-list-section">
+<div class="container">
+<div class="courses-grid">
+{% for course in courses %}
+<div class="course-card">
+<div class="course-image" style="background-color: #6200ee;">
+    <div class="course-image-placeholder">
+        <i class="fas fa-laptop-code"></i>
+    </div>
+</div>
+<div class="course-content">
+    <h2><a href="{{ url_for('course_detail', course_id=course.id) }}">{{ course.title }}</a></h2>
+    <div class="course-info">
+        <span class="instructor">Instructor: {{ course.instructor }}</span>
+        <span class="duration">Duration: {{ course.duration }}</span>
+    </div>
+    <p class="course-description">{{ course.description }}</p>
+    <div class="enrollment-info">
+        <span class="enrolled-count">{{ course.enrolled|length }} students enrolled</span>
+    </div>
+    <a href="{{ url_for('course_detail', course_id=course.id) }}" class="btn-secondary">View Course</a>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+</section>
+{% endblock %}
+

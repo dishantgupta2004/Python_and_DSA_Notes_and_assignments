@@ -1,0 +1,107 @@
+<!-- templates/history.html -->
+{% extends "layout.html" %}
+
+{% block title %}History - LearnHub{% endblock %}
+
+{% block content %}
+<section class="history-section">
+<div class="container">
+<h1>Your Activity History</h1>
+
+<div class="history-tabs">
+<button class="tab active" data-tab="page-views">Page Views</button>
+<button class="tab" data-tab="enrollments">Enrollments</button>
+</div>
+
+<div class="tab-content" id="page-views-content">
+<div class="history-card">
+<h2>Recent Page Views</h2>
+
+{% if page_views %}
+<div class="history-list">
+    {% for view in page_views %}
+    <div class="history-item">
+        <div class="history-icon">
+            <i class="fas fa-eye"></i>
+        </div>
+        <div class="history-content">
+            <h3>{{ view.title }}</h3>
+            <div class="meta">
+                <span class="page">{{ view.page }}</span>
+                <span class="timestamp">{{ view.timestamp }}</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-icon">
+        <i class="fas fa-eye-slash"></i>
+    </div>
+    <p>No page views recorded yet.</p>
+</div>
+{% endif %}
+</div>
+</div>
+
+<div class="tab-content hidden" id="enrollments-content">
+<div class="history-card">
+<h2>Course Enrollments</h2>
+
+{% if enrollments %}
+<div class="history-list">
+    {% for enrollment in enrollments %}
+    <div class="history-item">
+        <div class="history-icon">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <div class="history-content">
+            <h3>{{ enrollment.course_title }}</h3>
+            <div class="meta">
+                <span class="timestamp">Enrolled on {{ enrollment.timestamp }}</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-icon">
+        <i class="fas fa-book"></i>
+    </div>
+    <p>You haven't enrolled in any courses yet.</p>
+    <a href="{{ url_for('course_list') }}" class="btn-primary">Browse Courses</a>
+</div>
+{% endif %}
+</div>
+</div>
+</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const tabs = document.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabs.forEach(tab => {
+tab.addEventListener('click', function() {
+// Remove active class from all tabs
+tabs.forEach(t => t.classList.remove('active'));
+
+// Add active class to clicked tab
+this.classList.add('active');
+
+// Hide all tab contents
+tabContents.forEach(content => content.classList.add('hidden'));
+
+// Show the selected tab content
+const tabId = this.getAttribute('data-tab');
+document.getElementById(`${tabId}-content`).classList.remove('hidden');
+});
+});
+});
+</script>
+{% endblock %}

@@ -1,0 +1,97 @@
+<!-- templates/courses.html -->
+{% extends "layout.html" %}
+
+{% block title %}Our Courses - UniSole{% endblock %}
+
+{% block content %}
+<section class="courses-header">
+    <div class="container">
+        <h1>Our GenAI Courses</h1>
+        <p>Comprehensive programs designed to build your AI skills from the ground up</p>
+    </div>
+</section>
+
+<section class="courses-section">
+    <div class="container">
+        <div class="courses-grid">
+            {% for course in courses %}
+            <div class="course-card" id="{{ course.id }}">
+                <div class="course-header">
+                    <h2>{{ course.title }}</h2>
+                    <p class="subtitle">{{ course.subtitle }}</p>
+                </div>
+                <div class="course-body">
+                    <p class="description">{{ course.description }}</p>
+                    <div class="course-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Duration: {{ course.duration }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-signal"></i>
+                            <span>Level: {{ course.level }}</span>
+                        </div>
+                    </div>
+                    <div class="course-projects">
+                        <h3>Key Projects</h3>
+                        <ul>
+                            {% for project in course.projects %}
+                            <li>{{ project }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <a href="{{ url_for('index') }}" class="button">Register Now</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="testimonials-section">
+    <div class="container">
+        <h2>What Our Students Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p>"The GenAI course provided exactly what I needed to transition into AI development. The hands-on projects were invaluable for building my portfolio."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">S</div>
+                    <div class="author-info">
+                        <h4>Samantha Chen</h4>
+                        <p>Software Developer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p>"As someone with no programming background, I was worried about keeping up. The fundamentals track was perfectly paced, and the mentors were incredibly supportive."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">R</div>
+                    <div class="author-info">
+                        <h4>Rahul Patel</h4>
+                        <p>Marketing Specialist</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p>"The business applications track helped me understand how to effectively implement AI in our company. Within months, we launched our first AI-powered service."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">J</div>
+                    <div class="author-info">
+                        <h4>Jamie Wilson</h4>
+                        <p>Business Analyst</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,175 @@
+<!-- templates/wave_particle.html -->
+{% extends "layout.html" %}
+
+{% block title %}Wave-Particle Duality - Quantum Physics Portal{% endblock %}
+
+{% block content %}
+<h2>Wave-Particle Duality: The Fundamental Paradox</h2>
+
+<p>Wave-particle duality is a concept in quantum mechanics that states that every particle or quantum entity exhibits both wave and particle properties. It's one of the most revolutionary ideas in physics, challenging our classical intuition about the nature of matter and energy.</p>
+
+<div class="two-column">
+    <div>
+        <h3>The Double-Slit Experiment</h3>
+        <p>The double-slit experiment demonstrates this duality. When particles like electrons are fired at a barrier with two slits, they create an interference pattern on the detector screen behind it - as if they were waves passing through both slits simultaneously.</p>
+        <p>However, if we attempt to observe which slit the particle passes through, the interference pattern disappears and we see a pattern consistent with particles.</p>
+    </div>
+    <div id="double-slit-visualization"></div>
+</div>
+
+<h3>Historical Development</h3>
+<p>The concept was first proposed for light by Albert Einstein, building on Max Planck's work. Later, Louis de Broglie extended this idea to all matter, proposing that particles like electrons also have wave properties, with a wavelength inversely proportional to their momentum:</p>
+
+<div class="equation">
+    <p>λ = h/p</p>
+    <p>where h is Planck's constant and p is momentum</p>
+</div>
+
+<div id="debroglie-plot"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Visualization of double-slit experiment
+    function createDoubleSlit() {
+        // Simulation parameters
+        const width = document.getElementById('double-slit-visualization').offsetWidth;
+        const height = 300;
+        const slitDistance = 40;
+        const slitWidth = 10;
+        const slitY = 100;
+        
+        // Create data for barrier
+        const barrierX = [];
+        const barrierY = [];
+        
+        // Left part of barrier
+        for (let x = 0; x < width/2 - slitDistance/2 - slitWidth/2; x++) {
+            barrierX.push(x);
+            barrierY.push(slitY);
+        }
+        
+        // Right part of barrier
+        for (let x = width/2 + slitDistance/2 + slitWidth/2; x < width; x++) {
+            barrierX.push(x);
+            barrierY.push(slitY);
+        }
+        
+        // Create interference pattern
+        const patternX = [];
+        const patternY = [];
+        const intensity = [];
+        
+        for (let x = 0; x < width; x++) {
+            patternX.push(x);
+            patternY.push(height - 50);
+            
+            // Simple interference pattern calculation
+            const d1 = Math.sqrt(Math.pow(x - (width/2 - slitDistance/2), 2) + Math.pow(height - 50 - slitY, 2));
+            const d2 = Math.sqrt(Math.pow(x - (width/2 + slitDistance/2), 2) + Math.pow(height - 50 - slitY, 2));
+            
+            const wavelength = 20;
+            const phase = 2 * Math.PI * (d1 - d2) / wavelength;
+            const i = Math.pow(Math.cos(phase/2), 2);
+            
+            intensity.push(i * 50);
+        }
+        
+        const traces = [
+            {
+                x: barrierX,
+                y: barrierY,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Barrier with Slits',
+                line: {color: '#000000', width: 10}
+            },
+            {
+                x: patternX,
+                y: patternY,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Screen',
+                line: {color: '#cccccc', width: 5}
+            },
+            {
+                x: patternX,
+                y: patternY,
+                type: 'scatter',
+                mode: 'markers',
+                name: 'Interference Pattern',
+                marker: {
+                    color: intensity,
+                    size: intensity,
+                    colorscale: 'Viridis'
+                }
+            }
+        ];
+        
+        const layout = {
+            title: 'Double-Slit Experiment',
+            showlegend: false,
+            xaxis: {
+                showgrid: false,
+                zeroline: false,
+                showticklabels: false
+            },
+            yaxis: {
+                showgrid: false,
+                zeroline: false,
+                showticklabels: false
+            },
+            height: 300,
+            margin: {l: 0, r: 0, t: 30, b: 0}
+        };
+        
+        Plotly.newPlot('double-slit-visualization', traces, layout);
+    }
+    
+    // De Broglie wavelength plot
+    function plotDeBroglie() {
+        const momentum = [];
+        const wavelength = [];
+        
+        const h = 6.626e-34; // Planck's constant
+        
+        for (let p = 1; p <= 100; p++) {
+            momentum.push(p);
+            wavelength.push(h/p * 1e35); // Scaled for visualization
+        }
+        
+        const traces = [
+            {
+                x: momentum,
+                y: wavelength,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'De Broglie Wavelength',
+                line: {color: '#3366cc', width: 2}
+            }
+        ];
+        
+        const layout = {
+            title: 'De Broglie Wavelength vs. Momentum',
+            xaxis: {title: 'Momentum (p)'},
+            yaxis: {title: 'Wavelength (λ)'},
+            autosize: true,
+            height: 400,
+            margin: {l: 50, r: 50, t: 80, b: 50}
+        };
+        
+        Plotly.newPlot('debroglie-plot', traces, layout);
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        createDoubleSlit();
+        plotDeBroglie();
+    });
+    
+    window.addEventListener('resize', function() {
+        createDoubleSlit();
+        plotDeBroglie();
+    });
+</script>
+{% endblock %}
+

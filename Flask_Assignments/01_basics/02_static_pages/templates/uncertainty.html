@@ -1,0 +1,119 @@
+<!-- templates/uncertainty.html -->
+{% extends "layout.html" %}
+
+{% block title %}Uncertainty Principle - Quantum Physics Portal{% endblock %}
+
+{% block content %}
+<h2>Heisenberg's Uncertainty Principle</h2>
+
+<p>The Heisenberg uncertainty principle is a fundamental principle in quantum mechanics that sets limits on how precisely we can know certain pairs of physical properties of a particle, such as position and momentum, at the same time.</p>
+
+<div class="equation">
+    <p>ΔxΔp ≥ ℏ/2</p>
+    <p>where ℏ = h/2π (reduced Planck's constant)</p>
+</div>
+
+<p>This principle is not a limitation of our measuring instruments but a fundamental property of quantum systems. The more precisely we measure a particle's position, the less precisely we can know its momentum, and vice versa.</p>
+
+<div class="info-box">
+    <h3>Implications</h3>
+    <ul>
+        <li>Sets fundamental limits on measurement precision</li>
+        <li>Makes the concept of a particle trajectory meaningless</li>
+        <li>Enables quantum tunneling through energy barriers</li>
+        <li>Contributes to the stability of atoms</li>
+    </ul>
+</div>
+
+<h3>The Mathematics Behind Uncertainty</h3>
+
+<p>The uncertainty principle arises from the wave nature of quantum systems. In wave mechanics, a precisely defined wavelength (related to momentum) requires an infinitely extended wave, making its position undefined. Conversely, a precisely located wave requires a superposition of many wavelengths, making momentum undefined.</p>
+
+<div id="uncertainty-visualization"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Create uncertainty principle visualization
+    function visualizeUncertainty() {
+        const x = [];
+        const narrowWave = [];
+        const wideWave = [];
+        const narrowFourier = [];
+        const wideFourier = [];
+        const kValues = [];
+        
+        // Position space
+        for (let i = -10; i <= 10; i += 0.1) {
+            x.push(i);
+            
+            // Narrow wave packet (more certain position)
+            narrowWave.push(Math.exp(-i*i));
+            
+            // Wide wave packet (less certain position)
+            wideWave.push(Math.exp(-i*i/4));
+        }
+        
+        // Momentum space (k-space)
+        for (let k = -5; k <= 5; k += 0.1) {
+            kValues.push(k);
+            
+            // Fourier transform of narrow wave packet (less certain momentum)
+            narrowFourier.push(Math.exp(-k*k/4));
+            
+            // Fourier transform of wide wave packet (more certain momentum)
+            wideFourier.push(Math.exp(-k*k));
+        }
+        
+        const trace1 = {
+            x: x,
+            y: narrowWave,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Localized Wave Packet',
+            line: {color: '#3366cc', width: 2}
+        };
+        
+        const trace2 = {
+            x: x,
+            y: wideWave,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Spread Out Wave Packet',
+            line: {color: '#cc3366', width: 2}
+        };
+        
+        const trace3 = {
+            x: kValues,
+            y: narrowFourier,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Momentum Distribution (Wide)',
+            line: {color: '#3366cc', width: 2, dash: 'dash'}
+        };
+        
+        const trace4 = {
+            x: kValues,
+            y: wideFourier,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Momentum Distribution (Narrow)',
+            line: {color: '#cc3366', width: 2, dash: 'dash'}
+        };
+        
+        const layout = {
+            title: 'Uncertainty Principle: Position vs. Momentum',
+            xaxis: {title: 'Position (x) / Momentum (p)'},
+            yaxis: {title: 'Probability Amplitude'},
+            autosize: true,
+            height: 500,
+            margin: {l: 50, r: 50, t: 80, b: 50}
+        };
+        
+        Plotly.newPlot('uncertainty-visualization', [trace1, trace2, trace3, trace4], layout);
+    }
+    
+    document.addEventListener('DOMContentLoaded', visualizeUncertainty);
+    window.addEventListener('resize', visualizeUncertainty);
+</script>
+{% endblock %}

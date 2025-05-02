@@ -1,0 +1,103 @@
+<!-- templates/user.html -->
+{% extends "layout.html" %}
+
+{% block title %}{{ user.name }} - SciTube{% endblock %}
+
+{% block content %}
+<div class="user-profile">
+    <div class="profile-header">
+        <div class="profile-avatar">{{ user.name[0] }}</div>
+        <div class="profile-info">
+            <h1>{{ user.name }}</h1>
+            <div class="username">@{{ user.username }}</div>
+            <div class="bio">{{ user.bio }}</div>
+            <div class="stats">
+                <span class="joined">Joined {{ user.joined }}</span>
+                <span class="followers">{{ user.followers }} followers</span>
+            </div>
+            <button class="follow-btn">Follow</button>
+        </div>
+    </div>
+    
+    <div class="profile-content">
+        <div class="profile-tabs">
+            <button class="tab active" data-tab="videos">Videos</button>
+            <button class="tab" data-tab="articles">Articles</button>
+            <button class="tab" data-tab="about">About</button>
+        </div>
+        
+        <div class="tab-content" id="videos-content">
+            <div class="video-grid">
+                {% for video in videos %}
+                <div class="video-card">
+                    <a href="{{ url_for('video_detail', video_id=video.id) }}" class="thumbnail">
+                        <img src="https://img.youtube.com/vi/{{ video.id }}/mqdefault.jpg" alt="{{ video.title }}">
+                        <span class="duration">10:24</span>
+                    </a>
+                    <div class="video-info">
+                        <h3><a href="{{ url_for('video_detail', video_id=video.id) }}">{{ video.title }}</a></h3>
+                        <div class="meta">
+                            <span class="views">{{ video.views|format_number }} views</span>
+                            <span class="upload-date">{{ video.uploaded|time_ago }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="tab-content hidden" id="articles-content">
+            <div class="article-grid">
+                {% for article in articles %}
+                <div class="article-card">
+                    <div class="article-info">
+                        <h3><a href="{{ url_for('article_detail', article_id=article.id) }}">{{ article.title }}</a></h3>
+                        <p class="summary">{{ article.summary }}</p>
+                        <div class="meta">
+                            <span class="publish-date">{{ article.published|time_ago }}</span>
+                            <a href="{{ url_for('category', category=article.category) }}" class="category">{{ article.category }}</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="tab-content hidden" id="about-content">
+            <div class="about-section">
+                <h3>About {{ user.name }}</h3>
+                <p>{{ user.bio }}</p>
+                <div class="joined-date">Member since {{ user.joined }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab contents
+                tabContents.forEach(content => content.classList.add('hidden'));
+                
+                // Show the selected tab content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(`${tabId}-content`).classList.remove('hidden');
+            });
+        });
+    });
+</script>
+{% endblock %}
+

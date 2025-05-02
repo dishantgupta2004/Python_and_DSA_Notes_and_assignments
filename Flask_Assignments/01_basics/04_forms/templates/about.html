@@ -1,0 +1,171 @@
+<!-- templates/about.html -->
+{% extends "layout.html" %}
+
+{% block title %}About Us - UniSole{% endblock %}
+
+{% block content %}
+<section class="about-header">
+    <div class="container">
+        <h1>About UniSole</h1>
+        <p>Solving real-world problems with artificial intelligence</p>
+    </div>
+</section>
+
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-image">
+                <div class="placeholder-image">
+                    <i class="fas fa-robot"></i>
+                </div>
+            </div>
+            <div class="about-text">
+                <h2>Our Mission</h2>
+                <p>At UniSole, we believe that AI should be accessible to everyone and used to solve meaningful problems that impact people's lives. Our mission is to democratize AI education and empower the next generation of innovators to create solutions that matter.</p>
+                
+                <h2>Our Story</h2>
+                <p>Founded in 2023 by a team of AI researchers and educators, UniSole started with a simple idea: teach AI in a way that focuses on practical applications rather than just theory. What began as a small workshop series has grown into a comprehensive educational platform reaching students worldwide.</p>
+                
+                <h2>Our Approach</h2>
+                <p>We take a project-based approach to learning, focusing on real-world applications from day one. Our courses are designed to be accessible to learners from diverse backgrounds while providing the depth needed to build professional-grade AI solutions.</p>
+                
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3>Accessibility</h3>
+                        <p>We design our courses to be approachable for learners at all levels.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Innovation</h3>
+                        <p>We encourage creative approaches to problem-solving with AI.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>Ethics</h3>
+                        <p>We emphasize responsible AI development in all our teachings.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Community</h3>
+                        <p>We foster a supportive learning environment where everyone can grow.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="container">
+        <h2>Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-avatar">
+                    <div class="placeholder-avatar">A</div>
+                </div>
+                <h3>Dr. Aisha Patel</h3>
+                <p class="member-role">Founder & AI Researcher</p>
+                <p class="member-bio">Former research scientist at a leading AI lab with over 10 years of experience in machine learning and generative models.</p>
+                <div class="member-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">
+                    <div class="placeholder-avatar">M</div>
+                </div>
+                <h3>Dr. Michael Chen</h3>
+                <p class="member-role">Chief Technology Officer</p>
+                <p class="member-bio">Specialized in natural language processing and computer vision with multiple publications in top AI conferences.</p>
+                <div class="member-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">
+                    <div class="placeholder-avatar">S</div>
+                </div>
+                <h3>Sarah Johnson</h3>
+                <p class="member-role">Head of Education</p>
+                <p class="member-bio">Former professor with extensive experience developing AI curricula for diverse audiences.</p>
+                <div class="member-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">
+                    <div class="placeholder-avatar">L</div>
+                </div>
+                <h3>Dr. Luis Fernandez</h3>
+                <p class="member-role">Research Director</p>
+                <p class="member-bio">Leads our research initiatives focusing on AI applications for environmental and social challenges.</p>
+                <div class="member-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="partners-section">
+    <div class="container">
+        <h2>Our Partners</h2>
+        <div class="partners-grid">
+            <div class="partner">
+                <div class="partner-logo">
+                    <div class="placeholder-logo">
+                        <span>Tech<strong>Future</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="partner">
+                <div class="partner-logo">
+                    <div class="placeholder-logo">
+                        <span><strong>AI</strong>Labs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="partner">
+                <div class="partner-logo">
+                    <div class="placeholder-logo">
+                        <span>Global<strong>Learn</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="partner">
+                <div class="partner-logo">
+                    <div class="placeholder-logo">
+                        <span><strong>Quantum</strong>Edge</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-card">
+            <h2>Get in Touch</h2>
+            <p>Have questions about our courses or want to learn more about how we can help you on your AI journey?</p>
+            <div class="contact-buttons">
+                <a href="mailto:info@unisole.ai" class="button"><i class="fas fa-envelope"></i> Email Us</a>
+                <a href="{{ url_for('index') }}" class="button secondary"><i class="fas fa-user-plus"></i> Register for a Course</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

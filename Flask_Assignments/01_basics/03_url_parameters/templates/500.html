@@ -1,0 +1,52 @@
+<!-- templates/500.html -->
+{% extends "layout.html" %}
+
+{% block title %}Server Error - SciTube{% endblock %}
+
+{% block content %}
+<div class="error-page">
+    <div class="error-content">
+        <h1>500</h1>
+        <h2>Server Error</h2>
+        <p>Something went wrong on our end. Please try again later or contact support if the problem persists.</p>
+        <a href="{{ url_for('home') }}" class="button">Go to Homepage</a>
+    </div>
+</div>
+{% endblock %}{% endblock %}
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About SciTube</h3>
+                    <p>A platform dedicated to science and technology content for educational purposes.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="{{ url_for('category', category='science') }}">Science</a></li>
+                        <li><a href="{{ url_for('category', category='technology') }}">Technology</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SciTube | Created for educational purposes</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,113 @@
+<!-- templates/search.html -->
+{% extends "layout.html" %}
+
+{% block title %}Search Results: {{ query }} - SciTube{% endblock %}
+
+{% block content %}
+<div class="search-results-page">
+    <div class="search-header">
+        <h1>Search Results for "{{ query }}"</h1>
+        <div class="search-filters">
+            <button class="filter active" data-filter="all">All</button>
+            <button class="filter" data-filter="videos">Videos</button>
+            <button class="filter" data-filter="articles">Articles</button>
+        </div>
+    </div>
+    
+    <div class="search-results">
+        {% if results %}
+            {% if results.videos %}
+            <div class="result-section" id="videos-results">
+                <h2>Videos ({{ results.videos|length }})</h2>
+                <div class="video-results">
+                    {% for video in results.videos %}
+                    <div class="search-video-card">
+                        <a href="{{ url_for('video_detail', video_id=video.id) }}" class="thumbnail">
+                            <img src="https://img.youtube.com/vi/{{ video.id }}/mqdefault.jpg" alt="{{ video.title }}">
+                        </a>
+                        <div class="search-video-info">
+                            <h3><a href="{{ url_for('video_detail', video_id=video.id) }}">{{ video.title }}</a></h3>
+                            <p class="description">{{ video.description }}</p>
+                            <div class="meta">
+                                <a href="{{ url_for('user_profile', username=video.author) }}" class="author">{{ video.author }}</a>
+                                <span class="views">{{ video.views|format_number }} views</span>
+                                <span class="upload-date">{{ video.uploaded|time_ago }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if results.articles %}
+            <div class="result-section" id="articles-results">
+                <h2>Articles ({{ results.articles|length }})</h2>
+                <div class="article-results">
+                    {% for article in results.articles %}
+                    <div class="search-article-card">
+                        <div class="search-article-info">
+                            <h3><a href="{{ url_for('article_detail', article_id=article.id) }}">{{ article.title }}</a></h3>
+                            <p class="summary">{{ article.summary }}</p>
+                            <div class="meta">
+                                <span class="author">By {{ article.author }}</span>
+                                <span class="publish-date">{{ article.published|time_ago }}</span>
+                                <a href="{{ url_for('category', category=article.category) }}" class="category">{{ article.category }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if not results.videos and not results.articles %}
+            <div class="no-results">
+                <h2>No results found for "{{ query }}"</h2>
+                <p>Try different keywords or check your spelling.</p>
+            </div>
+            {% endif %}
+        {% else %}
+        <div class="no-results">
+            <h2>No results found for "{{ query }}"</h2>
+            <p>Try different keywords or check your spelling.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Search filter functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const filters = document.querySelectorAll('.filter');
+        const videoResults = document.getElementById('videos-results');
+        const articleResults = document.getElementById('articles-results');
+        
+        filters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                // Remove active class from all filters
+                filters.forEach(f => f.classList.remove('active'));
+                
+                // Add active class to clicked filter
+                this.classList.add('active');
+                
+                const filterType = this.getAttribute('data-filter');
+                
+                if (filterType === 'all') {
+                    if (videoResults) videoResults.style.display = 'block';
+                    if (articleResults) articleResults.style.display = 'block';
+                } else if (filterType === 'videos') {
+                    if (videoResults) videoResults.style.display = 'block';
+                    if (articleResults) articleResults.style.display = 'none';
+                } else if (filterType === 'articles') {
+                    if (videoResults) videoResults.style.display = 'none';
+                    if (articleResults) articleResults.style.display = 'block';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+

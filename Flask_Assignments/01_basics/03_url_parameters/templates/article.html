@@ -1,0 +1,89 @@
+<!-- templates/article.html -->
+{% extends "layout.html" %}
+
+{% block title %}{{ article.title }} - SciTube{% endblock %}
+
+{% block content %}
+<div class="article-page">
+    <div class="main-content">
+        <article class="full-article">
+            <header class="article-header">
+                <h1>{{ article.title }}</h1>
+                <div class="article-meta">
+                    <span class="author">By {{ article.author }}</span>
+                    <span class="publish-date">{{ article.published|time_ago }}</span>
+                    <a href="{{ url_for('category', category=article.category) }}" class="category">{{ article.category }}</a>
+                </div>
+            </header>
+            
+            <div class="article-summary">
+                <p class="summary-text">{{ article.summary }}</p>
+            </div>
+            
+            <div class="article-content">
+                <p>{{ article.content }}</p>
+            </div>
+            
+            <div class="article-footer">
+                <div class="share-buttons">
+                    <button class="share-btn"><i class="fas fa-share-alt"></i> Share</button>
+                    <button class="save-btn"><i class="far fa-bookmark"></i> Save</button>
+                </div>
+                <div class="tags">
+                    <a href="{{ url_for('category', category=article.category) }}" class="tag">#{{ article.category }}</a>
+                    <a href="{{ url_for('search') }}?q=physics" class="tag">#physics</a>
+                    <a href="{{ url_for('search') }}?q=research" class="tag">#research</a>
+                </div>
+            </div>
+        </article>
+        
+        <div class="comments-section">
+            <h3>Comments</h3>
+            <div class="comment-form">
+                <textarea placeholder="Add a comment..."></textarea>
+                <button class="comment-btn">Comment</button>
+            </div>
+            <div class="comments-list">
+                <div class="comment">
+                    <div class="comment-avatar">P</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author">PhysicsProf</span>
+                            <span class="comment-time">1 week ago</span>
+                        </div>
+                        <p>This research is fascinating. I'm looking forward to seeing how this develops.</p>
+                    </div>
+                </div>
+                <div class="comment">
+                    <div class="comment-avatar">R</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author">ResearcherX</span>
+                            <span class="comment-time">2 days ago</span>
+                        </div>
+                        <p>I'm curious about the methodological details. Was this peer-reviewed?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="sidebar">
+        <h3>Related Articles</h3>
+        <div class="related-articles">
+            {% for rel in related %}
+            <div class="sidebar-article-card">
+                <div class="sidebar-article-info">
+                    <h4><a href="{{ url_for('article_detail', article_id=rel.id) }}">{{ rel.title }}</a></h4>
+                    <div class="meta">
+                        <span class="author">By {{ rel.author }}</span>
+                        <span class="publish-date">{{ rel.published|time_ago }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

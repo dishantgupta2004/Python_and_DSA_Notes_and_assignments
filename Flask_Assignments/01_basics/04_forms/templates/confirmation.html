@@ -1,0 +1,97 @@
+<!-- templates/confirmation.html -->
+{% extends "layout.html" %}
+
+{% block title %}Registration Confirmed - UniSole{% endblock %}
+
+{% block content %}
+<section class="confirmation-section">
+    <div class="container">
+        <div class="confirmation-card">
+            <div class="confirmation-header">
+                <i class="fas fa-check-circle"></i>
+                <h1>Registration Confirmed!</h1>
+                <p>Thank you for registering for our GenAI course.</p>
+            </div>
+            
+            <div class="confirmation-details">
+                <h2>Your Registration Details</h2>
+                <div class="detail-group">
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value">{{ registration.full_name }}</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value">{{ registration.email }}</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Phone:</span>
+                    <span class="detail-value">{{ registration.phone }}</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Education:</span>
+                    <span class="detail-value">{{ registration.education }}</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Technical Background:</span>
+                    <span class="detail-value">{{ registration.background }}</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Course Track:</span>
+                    <span class="detail-value">{{ registration.course_track }}</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">How You Found Us:</span>
+                    <span class="detail-value">{{ registration.referral }}</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Newsletter:</span>
+                    <span class="detail-value">{{ 'Subscribed' if registration.newsletter else 'Not subscribed' }}</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Registration Date:</span>
+                    <span class="detail-value">{{ registration.registered_on }}</span>
+                </div>
+            </div>
+            
+            <div class="next-steps">
+                <h2>What Happens Next?</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Check Your Email</h3>
+                            <p>We've sent a confirmation email to {{ registration.email }} with important course details.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Complete Pre-Course Survey</h3>
+                            <p>You'll receive a survey to help us tailor the course to your needs.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Join Our Community</h3>
+                            <p>You'll get access to our online community where you can connect with fellow participants.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Prepare for Day 1</h3>
+                            <p>Set up your development environment using our guide, which will be sent a week before classes start.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="confirmation-footer">
+                <a href="{{ url_for('courses') }}" class="button">Learn More About Our Courses</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

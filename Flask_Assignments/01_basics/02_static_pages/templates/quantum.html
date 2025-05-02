@@ -1,0 +1,109 @@
+<!-- templates/quantum.html -->
+{% extends "layout.html" %}
+
+{% block title %}Quantum Mechanics - Quantum Physics Portal{% endblock %}
+
+{% block content %}
+<h2>Quantum Mechanics: The Theory of the Very Small</h2>
+
+<p>Quantum mechanics is the fundamental theory in physics that provides a description of the physical properties of nature at the scale of atoms and subatomic particles. It is the foundation of all quantum physics including quantum chemistry, quantum field theory, quantum technology, and quantum information science.</p>
+
+<div class="info-box">
+    <h3>Key Concepts</h3>
+    <ul>
+        <li>Quantization of energy</li>
+        <li>Wave-particle duality</li>
+        <li>Uncertainty principle</li>
+        <li>Quantum superposition</li>
+        <li>Quantum entanglement</li>
+    </ul>
+</div>
+
+<h3>The Mathematical Framework</h3>
+<p>The mathematical formulations of quantum mechanics are abstract. They describe the state of a quantum system using complex-valued wave functions, typically denoted as ψ. The Schrödinger equation determines how these wave functions evolve over time:</p>
+
+<div class="equation">
+    <p>iℏ ∂/∂t |ψ(t)⟩ = Ĥ |ψ(t)⟩</p>
+</div>
+
+<div id="schrodinger-plot"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Plot for quantum states in a potential well
+    function plotSchrodinger() {
+        const x = [];
+        const psi1 = [];
+        const psi2 = [];
+        const psi3 = [];
+        const potential = [];
+        
+        for (let i = 0; i <= 10; i += 0.05) {
+            x.push(i);
+            
+            // Infinite square well eigenfunctions
+            psi1.push(Math.sin(1 * Math.PI * i / 10) + 3);
+            psi2.push(Math.sin(2 * Math.PI * i / 10) + 6);
+            psi3.push(Math.sin(3 * Math.PI * i / 10) + 9);
+            
+            // Potential well
+            if (i <= 0.1 || i >= 9.9) {
+                potential.push(12);
+            } else {
+                potential.push(0);
+            }
+        }
+        
+        const traces = [
+            {
+                x: x,
+                y: potential,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Potential Well',
+                line: {color: '#666666', width: 2}
+            },
+            {
+                x: x,
+                y: psi1,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Ground State (n=1)',
+                line: {color: '#3366cc', width: 2}
+            },
+            {
+                x: x,
+                y: psi2,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'First Excited State (n=2)',
+                line: {color: '#cc3366', width: 2}
+            },
+            {
+                x: x,
+                y: psi3,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Second Excited State (n=3)',
+                line: {color: '#66cc33', width: 2}
+            }
+        ];
+        
+        const layout = {
+            title: 'Quantum States in a Potential Well',
+            xaxis: {title: 'Position'},
+            yaxis: {title: 'Energy & Wavefunction'},
+            autosize: true,
+            height: 500,
+            margin: {l: 50, r: 50, t: 80, b: 50}
+        };
+        
+        Plotly.newPlot('schrodinger-plot', traces, layout);
+    }
+    
+    document.addEventListener('DOMContentLoaded', plotSchrodinger);
+    window.addEventListener('resize', plotSchrodinger);
+</script>
+{% endblock %}
+
